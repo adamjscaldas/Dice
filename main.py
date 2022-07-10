@@ -1,5 +1,40 @@
 import random
 
+
+def cycling(cycles: int, random_value_used: list, dice_used: list) -> list:
+    sequence_returned = []
+    for y in range(cycles):
+        random.shuffle(random_value_used)
+        value_to_append = random.choice(dice_used)
+        sequence_returned.append(value_to_append)
+    print(f"The sequence of dices rolled is: {sequence_returned}", end="\n\n")
+    return sequence_returned
+
+
+def create_dict(dice_list_used: list) -> dict:
+    for z in range(len(dice_list_used)):
+        dice_value = dice_list_used[z]
+        count = 0
+        while dice_value in sequence:
+            sequence.remove(dice_value)
+            count += 1
+        if count > 0:
+            up_dict = {str(dice_value): count}
+            repetitions.update(up_dict)
+        else:
+            pass
+    return repetitions
+
+
+def check_appearance(dice_dict_used: dict) -> None:
+    print(f"""This was a cycle of {cycles} rolls.""", end="\n\n")
+    for key in dict(dice_dict_used):
+        key_value = dice_dict_used.get(key)
+        if key_value != 0:
+            print(f""""{key}" was rolled {key_value} times""")
+    return None
+
+
 d3_dict = {
     '1': 0, '2': 0, '3': 0
 }
@@ -71,40 +106,18 @@ repetitions = d20_dict  # repetitions precisa ser dict / repetitions needs to be
 
 
 random_value = [dice]
-sequence = []
 count = 0
 
 
 # Essa variável define quantas vezes o dado vai ser rolado
 # This variable defines how many times the dice will be rolled
-cycles = 2
-for y in range(cycles):
-    random.shuffle(random_value)
-    value_to_append = random.choice(dice)
-    sequence.append(value_to_append)
-
-print(f"sequence = {sequence}")
+cycles = 20
+sequence = cycling(cycles=cycles, random_value_used=random_value, dice_used=dice)
 
 # Cria um dict com a quantidade de vezes que cada item apareceu
 # Creates a dict that saves how many times each number was rolled
-for z in range(len(dice)):
-    dice_value = dice[z]
-    count = 0
-    while dice_value in sequence:
-        sequence.remove(dice_value)
-        count += 1
-    if count > 0:
-        up_dict = {str(dice_value): count}
-        repetitions.update(up_dict)
-    else:
-        pass
+created_dict = create_dict(dice_list_used=dice)
 
 # Faz a checagem de quantas vezes cada número apareceu
 # Check how many times each number appeared
-for key in dict(repetitions):
-    key_value = repetitions.get(key)
-    if key_value != 0:
-        if key_value == 1:
-            print(f"{key} appeared {key_value} times.")
-        else:
-            print(f"{key} appeared {key_value} times.")
+check_appearance(dice_dict_used=repetitions)
