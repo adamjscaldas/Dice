@@ -118,7 +118,7 @@ d100_dict = {
 }
 
 
-# ["d3", "d6", "d10", "d20", "d100"]
+# Uses the value given by "select_dice()" to determine which is the correct dict
 def select_dice_dict(chosen_dice: str) -> dict:
     while True:
         if chosen_dice == "d3":
@@ -135,6 +135,7 @@ def select_dice_dict(chosen_dice: str) -> dict:
             chosen_dice = select_dice()
 
 
+# Uses the value given by "select_dice_dict()" to determine which is the correct list
 def select_dice_list(chosen_dice_dict: dict) -> list:
     while True:
         if chosen_dice_dict == d3_dict:
@@ -151,20 +152,14 @@ def select_dice_list(chosen_dice_dict: dict) -> list:
             chosen_dice_dict = select_dice()
 
 
-def roll_dice(cycles: int, random_value: list, chosen_list: list, chosen_dict: dict):
-    # Roda o dado e retorna uma lista com a ordem em que os números apareceram
-    # Rolls the dice and returns a list with the order each number appeared
+# Returns a str that will be used to print an easygui box showing how many times each number appeared
+def roll_dice(cycles: int, random_value: list, chosen_list: list, chosen_dict: dict) -> str:
     sequence = cycling(cycles=cycles, random_value_used=random_value, dice_used=chosen_list)
-
-    # Cria um dict com a quantidade de vezes que cada item apareceu
-    # Creates a dict that saves how many times each number was rolled
     created_dict = create_dict(dice_list_used=chosen_list, chosen_dict_to_use=chosen_dict, sequence=sequence)
-
-    # Faz a checagem de quantas vezes cada número apareceu
-    # Check how many times each number appeared
     return check_appearance(dice_dict_used=created_dict)
 
 
+# Code structure
 def game() -> bool:
     choose_dice = select_dice()
     if choose_dice is not None:
