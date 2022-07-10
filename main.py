@@ -2,6 +2,15 @@ import random
 import easygui
 
 
+# Creates an easygui box to choose which dice will be used
+def select_dice() -> str:
+    return easygui.buttonbox(msg="Qual dado você quer rodar?\n"
+                                 "Which dice do you want to roll?",
+                             choices=["d3", "d6", "d10", "d20", "d100"],
+                             title="ESCOLHER DADO / CHOOSE DICE")
+
+
+# Removes all unwanted characters from the cycles input
 def clean_number(number_to_clean: str) -> str:
     items_removed = """ ,.+-=()_;:|\\/´`~^[]{}*&¨%$#@!?'"><
     AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzÇç"""
@@ -11,6 +20,7 @@ def clean_number(number_to_clean: str) -> str:
     return cleaned_number
 
 
+# "Rolls the dice" and defines the sequence that the numbers appeared
 def cycling(cycles: int, random_value_used: list, dice_used: list) -> list:
     sequence_returned = []
     for y in range(cycles):
@@ -20,6 +30,7 @@ def cycling(cycles: int, random_value_used: list, dice_used: list) -> list:
     return sequence_returned
 
 
+# Creates the dict that will be used to calculate how many times each number appeared
 def create_dict(dice_list_used: list, chosen_dict_to_use: dict, sequence: list) -> dict:
     for z in range(len(dice_list_used)):
         dice_value = dice_list_used[z]
@@ -35,7 +46,8 @@ def create_dict(dice_list_used: list, chosen_dict_to_use: dict, sequence: list) 
     return chosen_dict_to_use
 
 
-def check_appearance(dice_dict_used: dict, cycles: int) -> str:
+# Uses the dict created with "create_dict()" to check how many times each number appeared
+def check_appearance(dice_dict_used: dict) -> str:
     string_returned = ''
 
     for key in dict(dice_dict_used):
@@ -43,13 +55,6 @@ def check_appearance(dice_dict_used: dict, cycles: int) -> str:
         if key_value != 0:
             string_returned += f""""{key}" was rolled {key_value} times\n"""
     return string_returned
-
-
-def select_dice() -> str:
-    return easygui.buttonbox(msg="Qual dado você quer rodar?\n"
-                                 "Which dice do you want to roll?",
-                             choices=["d3", "d6", "d10", "d20", "d100"],
-                             title="ESCOLHER DADO / CHOOSE DICE")
 
 
 d3_list = [
@@ -157,7 +162,7 @@ def roll_dice(cycles: int, random_value: list, chosen_list: list, chosen_dict: d
 
     # Faz a checagem de quantas vezes cada número apareceu
     # Check how many times each number appeared
-    return check_appearance(dice_dict_used=created_dict, cycles=cycles)
+    return check_appearance(dice_dict_used=created_dict)
 
 
 def game() -> bool:
