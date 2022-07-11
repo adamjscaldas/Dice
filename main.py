@@ -6,8 +6,54 @@ import easygui
 def select_dice() -> str:
     return easygui.buttonbox(msg="Qual dado você quer rodar?\n"
                                  "Which dice do you want to roll?",
-                             choices=["d3", "d6", "d10", "d20", "d100"],
+                             choices=["d3", "d4", "d6", "d8", "d10", "d12", "d20", "d100"],
                              title="ESCOLHER DADO / CHOOSE DICE")
+
+
+# Uses the value given by "select_dice()" to determine which is the correct dict
+def select_dice_dict(chosen_dice: str) -> dict:
+    while True:
+        if chosen_dice == "d3":
+            return d3_dict
+        elif chosen_dice == "d4":
+            return d4_dict
+        elif chosen_dice == "d6":
+            return d6_dict
+        elif chosen_dice == "d8":
+            return d8_dict
+        elif chosen_dice == "d10":
+            return d10_dict
+        elif chosen_dice == "d12":
+            return d12_dict
+        elif chosen_dice == "d20":
+            return d20_dict
+        elif chosen_dice == "d100":
+            return d100_dict
+        else:
+            chosen_dice = select_dice()
+
+
+# Uses the value given by "select_dice_dict()" to determine which is the correct list
+def select_dice_list(chosen_dice_dict: dict) -> list:
+    while True:
+        if chosen_dice_dict == d3_dict:
+            return d3_list
+        elif chosen_dice_dict == d4_dict:
+            return d4_list
+        elif chosen_dice_dict == d6_dict:
+            return d6_list
+        elif chosen_dice_dict == d8_dict:
+            return d8_list
+        elif chosen_dice_dict == d10_dict:
+            return d10_list
+        elif chosen_dice_dict == d12_dict:
+            return d12_list
+        elif chosen_dice_dict == d20_dict:
+            return d20_list
+        elif chosen_dice_dict == d100_dict:
+            return d100_list
+        else:
+            chosen_dice_dict = select_dice()
 
 
 # Removes all unwanted characters from the cycles input
@@ -18,6 +64,14 @@ def clean_number(number_to_clean: str) -> str:
     for x in range(len(items_removed)):
         cleaned_number = cleaned_number.replace(items_removed[x], '')
     return cleaned_number
+
+
+# Returns a str that will be used to print an easygui box showing how many times each number appeared
+def roll_dice(cycles: int, random_value: list, chosen_list: list, chosen_dict: dict) -> str:
+    sequence = cycling(cycles=cycles, random_value_used=random_value, dice_used=chosen_list)
+    print(sequence)
+    created_dict = create_dict(dice_list_used=chosen_list, chosen_dict_to_use=chosen_dict, sequence=sequence)
+    return check_appearance(dice_dict_used=created_dict)
 
 
 # "Rolls the dice" and defines the sequence that the numbers appeared
@@ -55,48 +109,6 @@ def check_appearance(dice_dict_used: dict) -> str:
         if key_value != 0:
             string_returned += f""""{key}" was rolled {key_value} times\n"""
     return string_returned
-
-
-# Uses the value given by "select_dice()" to determine which is the correct dict
-def select_dice_dict(chosen_dice: str) -> dict:
-    while True:
-        if chosen_dice == "d3":
-            return d3_dict
-        elif chosen_dice == "d6":
-            return d6_dict
-        elif chosen_dice == "d10":
-            return d10_dict
-        elif chosen_dice == "d20":
-            return d20_dict
-        elif chosen_dice == "d100":
-            return d100_dict
-        else:
-            chosen_dice = select_dice()
-
-
-# Uses the value given by "select_dice_dict()" to determine which is the correct list
-def select_dice_list(chosen_dice_dict: dict) -> list:
-    while True:
-        if chosen_dice_dict == d3_dict:
-            return d3_list
-        elif chosen_dice_dict == d6_dict:
-            return d6_list
-        elif chosen_dice_dict == d10_dict:
-            return d10_list
-        elif chosen_dice_dict == d20_dict:
-            return d20_list
-        elif chosen_dice_dict == d100_dict:
-            return d100_list
-        else:
-            chosen_dice_dict = select_dice()
-
-
-# Returns a str that will be used to print an easygui box showing how many times each number appeared
-def roll_dice(cycles: int, random_value: list, chosen_list: list, chosen_dict: dict) -> str:
-    sequence = cycling(cycles=cycles, random_value_used=random_value, dice_used=chosen_list)
-    print(sequence)
-    created_dict = create_dict(dice_list_used=chosen_list, chosen_dict_to_use=chosen_dict, sequence=sequence)
-    return check_appearance(dice_dict_used=created_dict)
 
 
 # Code structure
@@ -151,16 +163,30 @@ def game() -> bool:
 
 if __name__ == "__main__":
     while True:
+
+        # Dices list
         d3_list = [
             '1', '2', '3'
+        ]
+        d4_list = [
+            '1', '2', '3',
+            '4'
         ]
         d6_list = [
             '1', '2', '3',
             '4', '5', '6'
         ]
+        d8_list = [
+            '1', '2', '3', '4',
+            '5', '6', '7', '8'
+        ]
         d10_list = [
             '1', '2', '3', '4', '5',
             '6', '7', '8', '9', '10'
+        ]
+        d12_list = [
+            '1', '2', '3', '4', '5', '6',
+            '7', '8', '9', '10', '11', '12'
         ]
         d20_list = [
             '1', '2', '3', '4',
@@ -181,16 +207,31 @@ if __name__ == "__main__":
             '81', '82', '83', '84', '85', '86', '87', '88', '89', '90',
             '91', '92', '93', '94', '95', '96', '97', '98', '99', '100'
         ]
+        # ***************
+
+        # Dices dict
         d3_dict = {
             '1': 0, '2': 0, '3': 0
+        }
+        d4_dict = {
+            '1': 0, '2': 0, '3': 0,
+            '4': 0
         }
         d6_dict = {
             '1': 0, '2': 0, '3': 0,
             '4': 0, '5': 0, '6': 0
         }
+        d8_dict = {
+            '1': 0, '2': 0, '3': 0, '4': 0,
+            '5': 0, '6': 0, '7': 0, '8': 0
+        }
         d10_dict = {
             '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
             '6': 0, '7': 0, '8': 0, '9': 0, '10': 0
+        }
+        d12_dict = {
+            '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0,
+            '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0
         }
         d20_dict = {
             '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
@@ -210,6 +251,8 @@ if __name__ == "__main__":
             '81': 0, '82': 0, '83': 0, '84': 0, '85': 0, '86': 0, '87': 0, '88': 0, '89': 0, '90': 0,
             '91': 0, '92': 0, '93': 0, '94': 0, '95': 0, '96': 0, '97': 0, '98': 0, '99': 0, '100': 0
         }
+        # ***************
+
         play = game()
         if play is True:
             pass
