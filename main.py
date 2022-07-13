@@ -10,50 +10,14 @@ def select_dice() -> str:
                              title="ESCOLHER DADO / CHOOSE DICE")
 
 
-# Uses the value given by "select_dice()" to determine which is the correct dict
-def select_dice_dict(chosen_dice: str) -> dict:
-    while True:
-        if chosen_dice == "d3":
-            return d3_dict
-        elif chosen_dice == "d4":
-            return d4_dict
-        elif chosen_dice == "d6":
-            return d6_dict
-        elif chosen_dice == "d8":
-            return d8_dict
-        elif chosen_dice == "d10":
-            return d10_dict
-        elif chosen_dice == "d12":
-            return d12_dict
-        elif chosen_dice == "d20":
-            return d20_dict
-        elif chosen_dice == "d100":
-            return d100_dict
-        else:
-            chosen_dice = select_dice()
+def return_dice_value(inputed_value: str) -> dict:
+    inputed_value = inputed_value.replace("d", "")
+    return {str(i + 1): 0 for i in range(int(inputed_value))}
 
 
-# Uses the value given by "select_dice_dict()" to determine which is the correct list
-def select_dice_list(chosen_dice_dict: dict) -> list:
-    while True:
-        if chosen_dice_dict == d3_dict:
-            return d3_list
-        elif chosen_dice_dict == d4_dict:
-            return d4_list
-        elif chosen_dice_dict == d6_dict:
-            return d6_list
-        elif chosen_dice_dict == d8_dict:
-            return d8_list
-        elif chosen_dice_dict == d10_dict:
-            return d10_list
-        elif chosen_dice_dict == d12_dict:
-            return d12_list
-        elif chosen_dice_dict == d20_dict:
-            return d20_list
-        elif chosen_dice_dict == d100_dict:
-            return d100_list
-        else:
-            chosen_dice_dict = select_dice()
+def return_dice_list(inputed_value: str) -> list:
+    inputed_value = inputed_value.replace("d", "")
+    return [str(i + 1) for i in range(int(inputed_value))]
 
 
 # Removes all unwanted characters from the cycles input
@@ -136,8 +100,8 @@ def game() -> bool:
             else:
                 return False
 
-        chosen_dict = select_dice_dict(chosen_dice=choose_dice)
-        chosen_list = select_dice_list(chosen_dice_dict=chosen_dict)
+        chosen_dict = return_dice_value(inputed_value=choose_dice)
+        chosen_list = return_dice_list(inputed_value=choose_dice)
 
         random_value = [chosen_list]
 
@@ -163,96 +127,6 @@ def game() -> bool:
 
 if __name__ == "__main__":
     while True:
-
-        # Dices list
-        d3_list = [
-            '1', '2', '3'
-        ]
-        d4_list = [
-            '1', '2', '3',
-            '4'
-        ]
-        d6_list = [
-            '1', '2', '3',
-            '4', '5', '6'
-        ]
-        d8_list = [
-            '1', '2', '3', '4',
-            '5', '6', '7', '8'
-        ]
-        d10_list = [
-            '1', '2', '3', '4', '5',
-            '6', '7', '8', '9', '10'
-        ]
-        d12_list = [
-            '1', '2', '3', '4', '5', '6',
-            '7', '8', '9', '10', '11', '12'
-        ]
-        d20_list = [
-            '1', '2', '3', '4',
-            '5', '6', '7', '8',
-            '9', '10', '11', '12',
-            '13', '14', '15', '16',
-            '17', '18', '19', '20'
-        ]
-        d100_list = [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-            '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
-            '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
-            '51', '52', '53', '54', '55', '56', '57', '58', '59', '60',
-            '61', '62', '63', '64', '65', '66', '67', '68', '69', '70',
-            '71', '72', '73', '74', '75', '76', '77', '78', '79', '80',
-            '81', '82', '83', '84', '85', '86', '87', '88', '89', '90',
-            '91', '92', '93', '94', '95', '96', '97', '98', '99', '100'
-        ]
-        # ***************
-
-        # Dices dict
-        d3_dict = {
-            '1': 0, '2': 0, '3': 0
-        }
-        d4_dict = {
-            '1': 0, '2': 0, '3': 0,
-            '4': 0
-        }
-        d6_dict = {
-            '1': 0, '2': 0, '3': 0,
-            '4': 0, '5': 0, '6': 0
-        }
-        d8_dict = {
-            '1': 0, '2': 0, '3': 0, '4': 0,
-            '5': 0, '6': 0, '7': 0, '8': 0
-        }
-        d10_dict = {
-            '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
-            '6': 0, '7': 0, '8': 0, '9': 0, '10': 0
-        }
-        d12_dict = {
-            '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0,
-            '7': 0, '8': 0, '9': 0, '10': 0, '11': 0, '12': 0
-        }
-        d20_dict = {
-            '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
-            '6': 0, '7': 0, '8': 0, '9': 0, '10': 0,
-            '11': 0, '12': 0, '13': 0, '14': 0, '15': 0,
-            '16': 0, '17': 0, '18': 0, '19': 0, '20': 0
-        }
-        d100_dict = {
-            '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0, '10': 0,
-            '11': 0, '12': 0, '13': 0, '14': 0, '15': 0, '16': 0, '17': 0, '18': 0, '19': 0, '20': 0,
-            '21': 0, '22': 0, '23': 0, '24': 0, '25': 0, '26': 0, '27': 0, '28': 0, '29': 0, '30': 0,
-            '31': 0, '32': 0, '33': 0, '34': 0, '35': 0, '36': 0, '37': 0, '38': 0, '39': 0, '40': 0,
-            '41': 0, '42': 0, '43': 0, '44': 0, '45': 0, '46': 0, '47': 0, '48': 0, '49': 0, '50': 0,
-            '51': 0, '52': 0, '53': 0, '54': 0, '55': 0, '56': 0, '57': 0, '58': 0, '59': 0, '60': 0,
-            '61': 0, '62': 0, '63': 0, '64': 0, '65': 0, '66': 0, '67': 0, '68': 0, '69': 0, '70': 0,
-            '71': 0, '72': 0, '73': 0, '74': 0, '75': 0, '76': 0, '77': 0, '78': 0, '79': 0, '80': 0,
-            '81': 0, '82': 0, '83': 0, '84': 0, '85': 0, '86': 0, '87': 0, '88': 0, '89': 0, '90': 0,
-            '91': 0, '92': 0, '93': 0, '94': 0, '95': 0, '96': 0, '97': 0, '98': 0, '99': 0, '100': 0
-        }
-        # ***************
-
         play = game()
         if play is True:
             pass
